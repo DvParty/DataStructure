@@ -12,14 +12,14 @@ public class  Stack {
     }
 
     public Node pop(){
-
+    return null;
     }
 
     public Node peek(){
-
+        return null;
     }
 
     private boolean isEmpty() {
-
+        return false;
     }
 }
