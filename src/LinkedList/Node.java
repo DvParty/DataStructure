@@ -1,20 +1,15 @@
 package LinkedList;
 
 public class Node {
-    private Object value;
+    private String value;
     private Node next;
 
-    public Node(){
-        this.value = null;
-        this.next = null;
-    }
-
-    public Node(Object value){
+    public Node(String value) {
         this.value = value;
         this.next = null;
     }
 
-    public void setValue(Object value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
@@ -22,7 +17,7 @@ public class Node {
         this.next = next;
     }
 
-    public Object getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -30,4 +25,3 @@ public class Node {
         return next;
     }
 }
-

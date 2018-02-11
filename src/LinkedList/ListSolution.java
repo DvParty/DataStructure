@@ -2,37 +2,30 @@ package LinkedList;
 
 public class ListSolution {
 
-    public static void main( String[] args ){
+    public static void main(String[] args) {
 
         LinkeList list = new LinkeList();
+        list.addLast("Monday");
+        list.addLast("Tuesday");
+        list.addLast("Friday");
 
-        list.addFirst(new Node(3));
-        list.addFirst(new Node(1));
-        list.addFirst(new Node(2));
+        list.addFirst("Sunday");
 
-        list.addLast(new Node(5));
-        list.addLast(new Node(4));
-        list.addLast(new Node(6));
+        list.insert(4, "Wednesday");
+        list.insert(5, "Thursday");
 
-        list.insert(3, new Node(9));
-        list.insert(1, new Node(8));
+        Node removeFirst1 = list.removeFirst();
+        System.out.println("removed : " + removeFirst1.getValue());
 
-        list.size();
+        Node removeLast1 = list.removeLast();
+        System.out.println("removed : " + removeLast1.getValue());
 
-        list.get(2);
+        Node removed = list.remove(4);
+        System.out.println("removed : " + removed.getValue());
 
-        list.removeFirst();
-        list.removeLast();
-        list.remove(2);
+        Node getNode = list.get(2);
+        System.out.println("get : " + getNode.getValue());
 
-        list.size();
+    }// main()
 
-        list.removeLast();
-        list.removeLast();
-        list.removeLast();
-        list.removeLast();
-        list.removeLast();
-        list.removeLast();
-    }
 }
-

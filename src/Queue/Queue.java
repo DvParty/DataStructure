@@ -2,102 +2,83 @@ package Queue;
 
 public class Queue {
     private Node head;
-    private int front;
+    private int front = -1;
     private int rear;
-
-    /**
-     * Constructor
-     *  head 선언 및 front, rear 초기화
-     */
-    public Queue(){
-        this.head   = new Node();
-        this.front  = -1;
-        this.rear   = -1;
-    }
 
     /**
      * 데이터 입력
      * @param input
      */
-    public void enQueue(Node input){
-        if( isEmpty() ) {
-            this.head.setNext( input );
-            this.rear++;
-            System.out.println("SUCCESS ENQUEUE:::: " + input.getValue() + "");
-        }
-        else {
-            Node tmp = this.head;
-            for( int i = this.front; i < this.rear; i++ ) {
+    public void enQueue(Object inputObj){
+
+        Node newNode = new Node(inputObj);
+
+        if (isEmpty()) {
+            this.head = newNode;
+        } else {
+            Node tmp = new Node();
+            tmp = this.head;
+            while (tmp.getNext() != null) {
                 tmp = tmp.getNext();
-            }
-            tmp.setNext( input );
-            this.rear++;
-            System.out.println("SUCCESS ENQUEUE:::: " + input.getValue() + "");
+            }// while()
+            tmp.setNext(newNode);
         }
-        printQueue();
-    }
+        this.front++;
+        printQ();
+
+    }// enQueue()
 
     /**
-     * latest 데이터 리턴 및 삭제
+     * 데이터 리턴 및 삭제
      * @return
      */
-    public Node deQueue(){
-        if( isEmpty() ){
-            System.out.println("ERROR::::Queue is Empty");
-            return null;
+    public void deQueue(){
+        if (isEmpty()) {
+            printQ();
+            return;
+        } else {
+            Node rear = this.head;
+            Node newRear = rear;
+            while (rear.getNext() != null) {
+                newRear = rear;
+                rear = rear.getNext();
+            }// while()
+            System.out.println("deQueue >> " + rear.getValue() + " deleted..");
+            newRear.setNext(null);
         }
-        else {
-            Node resultNode = this.head.getNext();
-            this.head.setNext(resultNode.getNext());
-            this.rear--;
-
-            System.out.println("SUCCESS DEQUEUE:::: " + resultNode.getValue() + "");
-            printQueue();
-
-            return resultNode;
-        }
-    }
+        this.front--;
+        printQ();
+    }// deQueue()
 
     /**
-     * latest 데이터 리턴
+     * 데이터 리턴
      * @return
      */
-    public Node element(){
-        if( isEmpty() ){
-            System.out.println("ERROR::::Queue is Empty");
-            return null;
-        } else {
-            Node resultNode = this.head.getNext();
+    public void element(){
 
-            System.out.println("SUCCESS ELEMENT::::" + resultNode.getValue());
-            printQueue();
-
-            return resultNode;
+        Node tmp = this.head;
+        while (tmp.getNext() != null) {
+            tmp = tmp.getNext();
         }
-    }
+        System.out.println("now >> " + tmp.getValue());
+    }// element()
 
-    private boolean isEmpty(){
-        if( this.front >= this.rear ) {
-            return true;
-        }
-        else
-            return false;
-    }
+    public boolean isEmpty(){
+        return this.front <= -1;
+    }// isEmpty()
 
-    private void printQueue(){
-        if( isEmpty() ){
-            System.out.println("PRINT QUEUE:::: Queue is Empty");
-            return ;
+    public void printQ () {
+        if (isEmpty()) {
+            System.out.println("There is no Node...");
         } else {
-            Node tmp = this.head.getNext();
-
-            System.out.print("PRINT QUEUE::::");
-            while( tmp != null ){
-                System.out.print( tmp.getValue() + " " );
+            Node tmp = new Node();
+            tmp = this.head;
+            while (tmp.getNext() != null) {
+                System.out.print(tmp.getValue() + "\t");
                 tmp = tmp.getNext();
-            }
-            System.out.println();
+            }// while()
+            System.out.print(tmp.getValue() + "\n");
         }
-    }
+        System.out.println("======================");
+    }// printQ()
 }
-

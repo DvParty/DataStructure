@@ -4,233 +4,184 @@ public class LinkeList {
     private Node head;
     private int size = 0;
 
-    public LinkeList(){
-
-        this.head = new Node();
-
+    // constructor
+    public LinkeList() {
     }
 
-    public void addFirst(Node input) {
+	/*
+	 * public LinkeList(Node head, int size) { super(); this.head = head;
+	 * this.size = size; }
+	 */
 
-        if(isEmpty()){
+    public void addFirst(String newValue) {
+        Node newNode = new Node(newValue);
 
-            this.head.setNext(input);
+        if (this.head == null) {
+            this.head = newNode;
+        } else {
 
-        } else{
-
-            Node tmp = this.head.getNext();
-            input.setNext(tmp);
-            this.head.setNext(input);
-
+            newNode.setNext(this.head);
+            this.head = newNode;
         }
         this.size++;
+        printList("addFirst");
+    }// addFirst()
 
-        System.out.println("Success::::Add first data - " + input.getValue());
-        printList();
-    }
+    public void addLast(String newValue) {
+        Node newNode = new Node(newValue);
 
-    public void addLast(Node input){
+        if (this.head == null) {
+            this.head = newNode;
+        } else {
+            newNode.setNext(null);
+            Node findLast = this.head;
+            while (findLast.getNext() != null) {
+                findLast = findLast.getNext();
+            } // while
 
-        Node tmp = this.head;
-
-        while(tmp.getNext() != null){
-
-            tmp = tmp.getNext();
+            findLast.setNext(newNode);
         }
+        this.size++;
+        printList("addLast");
+    }// addLast
 
-        tmp.setNext(input);
+    public void insert(int index, String inputValue) {
+        Node newNode = new Node(inputValue);
+
+        if (this.head == null) {
+            head = newNode;
+        } else if (index == 1) {
+            newNode.setNext(this.head);
+            this.head = newNode;
+        } else {
+            Node prevNode = this.head;
+            Node subsNode = null;
+            int cnt = 1;
+
+            while (cnt < index) {
+
+                if (cnt == index - 1) {
+                    newNode.setNext(prevNode.getNext());
+                    prevNode.setNext(newNode);
+                    break;
+                } else {
+                    prevNode = prevNode.getNext();
+                    cnt++;
+                }
+            } // whichc
+        } // else
         this.size++;
 
-        System.out.println("Success::::Add last data - " + input.getValue());
-        printList();
-    }
+        // StackTraceElement[] stacks = new Throwable().getStackTrace();
+        // StackTraceElement currStack = stacks[0];
+        // System.out.println("==" + currStack.getMethodName());
 
-    public void insert(int index, Node input){
+        printList("insert");
 
-        if(size < index || index < 0){
+    }// insert()
 
-            System.out.println("Error::::Cannot process insert Operation - Index not available");
-            return ;
+    public Node removeFirst() {
 
-        } else if(this.size == 0){
+        Node result = this.head;
 
-            System.out.println("Error::::Cannot process insert Operation - list is empty");
-            return ;
-
+        if (this.head == null) {
+            System.out.println("There is no Node to remove");
+            return null;
         } else {
-
-            Node prev = this.head;
-            Node tmp = prev.getNext();
-            int cur = 0;
-
-            while(tmp.getNext() != null){
-
-                prev = prev.getNext();
-                tmp = tmp.getNext();
-                cur++;
-                if(index == cur) break;
-
-            }
-
-            input.setNext(prev.getNext());
-            prev.setNext(input);
-
-            this.size++;
-
-            System.out.println("Success::::Insert data - " + input.getValue() + ", Index - " + index);
-            printList();
+            Node nextHead = this.head.getNext();
+            this.head = nextHead;
         }
-    }
+        this.size--;
+        printList("removeFirst");
+        return result;
+    }// removeFirst()
 
-    public Node removeFirst(){
+    public Node removeLast() {
+        Node result = null;
 
-        Node tmp = null;
-
-        if(isEmpty()) {
-
-            System.out.println("Error::::List is empty");
-
+        if (this.head == null) {
+            System.out.println("There is no Node to remove");
+            return null;
         } else {
-
-            tmp = this.head.getNext();
-            this.head.setNext(tmp.getNext());
-            this.size--;
-
-            System.out.println("Success::::Remove first data - " + tmp.getValue());
-            printList();
-        }
-
-        return tmp;
-    }
-
-    public Node removeLast(){
-
-        Node tmp = null;
-
-        if(isEmpty()){
-
-            System.out.println("Error::::List is empty");
-
-        } else{
-
-            Node prev = this.head;
-            tmp = prev.getNext();
-
-            while(tmp.getNext() != null){
-                prev = prev.getNext();
-                tmp = tmp.getNext();
+            Node prevNode = this.head;
+            Node removedNode = prevNode.getNext();
+            while (removedNode.getNext() != null) {
+                prevNode = removedNode;
+                removedNode = removedNode.getNext();
             }
-
-            prev.setNext(null);
-            this.size--;
-
-            System.out.println("Success::::Remove last data - " + tmp.getValue());
-            printList();
+            result = removedNode;
+            prevNode.setNext(null);
         }
+        this.size--;
+        printList("removeLast");
+        return result;
+    }// removeLast()
 
-        return tmp;
-    }
+    public Node remove(int index) {
 
-    public Node remove(int index){
+        Node result = null;
 
-        Node tmp = null;
-
-        if(size < index || index < 0){
-
-            System.out.println("Error::::Cannot process insert Operation - Index not available");
-
-        } else if(isEmpty()){
-
-            System.out.println("Error::::Cannot process insert Operation - list is empty");
-
+        if (this.head == null || this.size < index) {
+            System.out.println("There is no Node which corresponded that index");
+            return null;
         } else {
+            Node prevNode = this.head;
+            Node removedNode = prevNode.getNext();
 
-            Node prev = this.head;
-            tmp = prev.getNext();
-            int cur = 0;
+            int cnt = 1;
 
-            while(tmp.getNext() != null){
+            while (cnt < index) {
 
-                prev = prev.getNext();
-                tmp = tmp.getNext();
-                cur++;
-                if(index == cur) break;
+                if (cnt == index - 1) {
+                    result = removedNode;
+                    prevNode.setNext(removedNode.getNext());
+                    break;
+                } else {
+                    prevNode = removedNode;
+                    removedNode = removedNode.getNext();
+                    cnt++;
+                }
+            } // while
+        } // else
+        this.size--;
+        printList("remove");
+        return result;
+    }// remove()
 
-            }
-
-            prev.setNext(tmp.getNext());
-
-            this.size--;
-
-            System.out.println("Success::::Remove index " + index + " data " + tmp.getValue());
-            printList();
-        }
-
-        return tmp;
-    }
-
-    public Node get(int index){
-
-        Node tmp = null;
-
-        if(size < index || index < 0){
-
-            System.out.println("Error::::Cannot process insert Operation - Index not available");
-
-        } else if(isEmpty()){
-
-            System.out.println("Error::::Cannot process insert Operation - list is empty");
-
-        } else {
-
-            tmp = this.head.getNext();
-            int cur = 0;
-
-            while(tmp.getNext() != null){
-
-                tmp = tmp.getNext();
-                cur++;
-                if(index == cur) break;
-
-                System.out.println("Success::::Get index " + index + " data " + tmp.getValue());
-                printList();
-            }
-        }
-
-        return tmp;
-    }
-
-    public int size(){
-
-        System.out.println("Success::::List size - " + this.size);
-
+    public int size() {
         return this.size;
-
     }
 
+    public Node get(int index) {
 
-    public boolean isEmpty(){
-        if(this.size == 0)
-            return true;
-        else
-            return false;
-    }
-
-    public void printList(){
-
-        if(isEmpty()){
-            System.out.println("List is Empty");
-        }else {
-
-            Node tmp = this.head;
-
-            while (tmp.getNext() != null) {
-                tmp = tmp.getNext();
-                System.out.print(tmp.getValue() + " ");
+        Node result = null;
+        int cnt = 0;
+        Node curNode = this.head;
+        while (cnt < index) {
+            if (cnt == index - 1) {
+                result = curNode;
+            } else {
+                curNode = curNode.getNext();
             }
-            System.out.println();
-
+            cnt++;
         }
-    }
-}
+        printList("get");
+        return result;
+    }// get()
 
+    public void printList(String method) {
+
+        if (this.head == null) {
+            System.out.println("There is no Node..");
+        } else {
+            Node node = this.head;
+            System.out.print(method + " (current size : " + this.size + ") \n\t\t");
+            while (node != null) {
+                System.out.print(node.getValue() + "  ");
+                node = node.getNext();
+            }
+        } // else
+        System.out.println();
+
+    }// printList()
+}
